@@ -7,3 +7,6 @@ dist/
 .DS_Store
 coverage/
 *.tsbuildinfo
+
+# OMC local state (private session data, DO NOT commit)
+.omc/
