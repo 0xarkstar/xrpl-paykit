@@ -7,7 +7,9 @@
 > **Stripe DX, x402-ready, made for Korea.**
 > XRPL 위에서 5분 안에 결제와 자동 정산을 다는 머천트 SDK.
 
-![status](https://img.shields.io/badge/status-PRD%20v0.3%20frozen%20·%20MVP%20in%20progress-orange)
+![status](https://img.shields.io/badge/status-PRD%20v0.3%20frozen%20·%20MVP%20core%20implemented-green)
+![tests](https://img.shields.io/badge/tests-9%2F9%20passing-brightgreen)
+![typescript](https://img.shields.io/badge/TypeScript-strict-blue)
 ![license-core](https://img.shields.io/badge/core-Apache--2.0-blue)
 ![license-sdk](https://img.shields.io/badge/SDK-MIT-blue)
 ![network](https://img.shields.io/badge/network-XRPL-black)
@@ -137,10 +139,62 @@ PayKit이 모든 결제에 대해 통과시키는 9개 게이트 (AND 결합):
 
 ---
 
+## Code structure
+
+```
+xrpl-paykit/
+├── src/
+│   ├── types.ts            # PaymentIntent, VerificationResult, WebhookEvent, ...
+│   ├── verifier.ts         # 9-단계 ledger 검증 (9 gates, all implemented)
+│   ├── checkout.ts         # Hosted Checkout — intent 생성 + URL 발급
+│   ├── webhook.ts          # HMAC-SHA256 서명·검증 + 재시도(7회, ~80h) 전송
+│   ├── state-machine.ts    # PaymentStatus 전이 테이블 (terminal states 보호)
+│   └── index.ts            # Public API surface (re-exports)
+├── tests/
+│   └── verifier.test.ts    # 9 시나리오 (happy path + 6 게이트 거부 + 2 edge)
+└── examples/
+    └── quickstart.ts       # 5-line merchant integration demo
+```
+
+**Source LoC**: ~1,140 (src), ~150 (tests), ~150 (examples)
+
+머천트 통합 5 라인:
+
+```typescript
+import { Checkout, InMemoryIntentStore } from '@xrpl-paykit/sdk';
+
+const checkout = new Checkout(config, new InMemoryIntentStore());
+const intent = await checkout.createIntent({ merchantOrderId, amount });
+res.redirect(checkout.getCheckoutUrl(intent.id));
+// → user signs in Xaman → PayKit verifies → webhook fires on succeeded
+```
+
+## Build & test
+
+```bash
+npm install
+npm run typecheck       # tsc --noEmit, strict mode clean
+npm test                # vitest — 9/9 passing
+npm run example:quickstart   # synthesized end-to-end demo
+```
+
+Quickstart output validates the canonical attack scenario (Partial Payment exploit) is rejected:
+
+```
+[5] Partial Payment exploit attempt:
+    verified = false (should be false)
+    suggestedStatus = failed
+    failed gates = [ 'deliveredAmountExact', 'notPartialPayment' ]
+```
+
+---
+
 ## Status
 
 - **PRD v0.3 동결 완료** — 9-단계 검증·webhook·상태머신·HMAC-SHA256 서명·재시도 7회·멱등성 키 사양 확정
-- **MVP 코어 개발 중** — testnet 트랙
+- **MVP 코어 구현 완료** — TypeScript strict mode, verifier 9 gates 모두 구현, vitest 9/9 통과, quickstart 데모 작동
+- **Testnet 지갑 활성** — `rNeAi6oLaxGyH3PNijKH4N3Pp8BygKVLCN` (faucet 트랜잭션 1건)
+- **다음 단계** — xrpl.js 연동 (현재 verifier는 synthesized tx로 검증 완료) + Hosted Checkout 호스팅 페이지 + 다중 머천트 통합 테스트
 - **KFIP 2026 1차 제출** — 2026-05-13
 - **본선 무대** — 6/25 Two IFC Seoul The Forum 3층 (예정)
 

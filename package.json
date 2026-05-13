@@ -1,0 +1,51 @@
+{
+  "name": "@xrpl-paykit/sdk",
+  "version": "0.0.1",
+  "description": "XRPL PayKit — Stripe DX, x402-ready, made for Korea. Merchant-side SDK for XRPL payments: Hosted Checkout + Verified Reconciliation (9-step ledger verification) + Signed Webhook.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "example:quickstart": "tsx examples/quickstart.ts"
+  },
+  "dependencies": {
+    "xrpl": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.4.0"
+  },
+  "keywords": [
+    "xrpl",
+    "ripple",
+    "payment",
+    "sdk",
+    "stripe",
+    "x402",
+    "webhook",
+    "checkout",
+    "fintech",
+    "korea"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xarkstar/xrpl-paykit.git"
+  },
+  "author": "Veridot (Bluenode @ Inha University Blockchain Club)"
+}
