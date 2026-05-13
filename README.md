@@ -123,12 +123,14 @@ PayKit이 모든 결제에 대해 통과시키는 9개 게이트 (AND 결합):
 ### v1.0 (3–6개월)
 - **RLUSD 메인넷 결제** (코인원 KRW 페어 활용)
 - Web3Auth XRPL 임베디드 지갑 옵션 (K-콘텐츠 소셜 로그인)
+- **XLS-85 Token-Enabled Escrows** — 머천트 즉시 정산 락업 (카드 D+2 → XRPL 초 단위)
 - 머천트 대시보드
 - `@paykit/sdk` v1.0 정식 출시
 - 첫 유료 머천트 5곳
 
 ### v2.0 (6–18개월)
 - **Multi-Surface Payments** — 단일 Intent가 XRPL Mainnet(XRP/RLUSD) 또는 XRPL EVM Sidechain(wXRP/USDC) 어느 표면이든 결제 수신
+- **Cross-Currency Pathfinding** — 사용자 XRP 결제 → 머천트 RLUSD 자동 환전 경로 native 처리
 - **x402 Facilitator Adapter** (t54.ai + self-hosted)
 - 에이전트용 budget/session 제어
 - B2B 엔터프라이즈 진출
