@@ -11,11 +11,14 @@
     "typecheck": "pnpm -r typecheck",
     "lint": "pnpm -r lint",
     "db:push": "pnpm -F @paykit/paykit db:push",
-    "db:generate": "pnpm -F @paykit/paykit db:generate"
+    "db:generate": "pnpm -F @paykit/paykit db:generate",
+    "example:testnet-live": "tsx examples/testnet-live.ts"
   },
   "devDependencies": {
     "typescript": "^5.4.5",
     "vitest": "^1.6.0",
-    "@types/node": "^20.12.0"
+    "@types/node": "^20.12.0",
+    "tsx": "^4.7.0",
+    "xrpl": "^4.0.0"
   }
 }

@@ -116,6 +116,75 @@ describe("verifyXrplTransaction (mock mode)", () => {
     expect(r.ok).toBe(false);
     if (!r.ok) expect(r.reason).toBe("intent_mismatch");
   });
+
+  // ──────────────────────────────────────────────────────────────────────
+  // Gate 7 — tfPartialPayment flag rejection (Partial Payment exploit defense)
+  // ──────────────────────────────────────────────────────────────────────
+  it("rejects tfPartialPayment flag (0x00020000) — partial payment exploit", async () => {
+    // Attacker declares Amount=1,000,000 but tfPartialPayment lets only 1 drop arrive.
+    // delivered_amount alone can be tampered to look like the expected amount —
+    // the flag itself must be the rejection trigger.
+    withFixture("HASH_PARTIAL_FLAG", buildTx({
+      Flags: 0x00020000,
+      meta: { TransactionResult: "tesSUCCESS", delivered_amount: "1250000" },
+    }));
+    const r = await verifyXrplTransaction("HASH_PARTIAL_FLAG", expected);
+    expect(r.ok).toBe(false);
+    if (!r.ok) {
+      expect(r.reason).toBe("partial_payment_flag");
+      expect(r.detail?.tfPartialPayment).toBe(0x00020000);
+    }
+  });
+
+  it("accepts payment when Flags is 0 (no tfPartialPayment bit)", async () => {
+    withFixture("HASH_NOFLAGS", buildTx({ Flags: 0 }));
+    const r = await verifyXrplTransaction("HASH_NOFLAGS", expected);
+    expect(r.ok).toBe(true);
+  });
+
+  it("accepts payment when Flags has unrelated bits but not tfPartialPayment", async () => {
+    // tfFullyCanonicalSig (0x80000000) is harmless for payment receivers.
+    withFixture("HASH_OTHERFLAG", buildTx({ Flags: 0x80000000 }));
+    const r = await verifyXrplTransaction("HASH_OTHERFLAG", expected);
+    expect(r.ok).toBe(true);
+  });
+
+  // ──────────────────────────────────────────────────────────────────────
+  // Gate 5 — DestinationTag match (only when intent specifies a tag)
+  // ──────────────────────────────────────────────────────────────────────
+  it("enforces DestinationTag when intent sets one", async () => {
+    withFixture("HASH_TAG_OK", buildTx({ DestinationTag: 42 }));
+    const r = await verifyXrplTransaction("HASH_TAG_OK", { ...expected, destinationTag: 42 });
+    expect(r.ok).toBe(true);
+  });
+
+  it("rejects mismatched DestinationTag", async () => {
+    withFixture("HASH_TAG_BAD", buildTx({ DestinationTag: 7 }));
+    const r = await verifyXrplTransaction("HASH_TAG_BAD", { ...expected, destinationTag: 42 });
+    expect(r.ok).toBe(false);
+    if (!r.ok) {
+      expect(r.reason).toBe("wrong_destination_tag");
+      expect(r.detail?.expected).toBe(42);
+      expect(r.detail?.actual).toBe(7);
+    }
+  });
+
+  it("rejects missing DestinationTag when intent requires one", async () => {
+    withFixture("HASH_TAG_MISSING", buildTx()); // no DestinationTag
+    const r = await verifyXrplTransaction("HASH_TAG_MISSING", { ...expected, destinationTag: 42 });
+    expect(r.ok).toBe(false);
+    if (!r.ok) {
+      expect(r.reason).toBe("wrong_destination_tag");
+      expect(r.detail?.actual).toBeNull();
+    }
+  });
+
+  it("vacuously passes DestinationTag gate when intent has no tag", async () => {
+    // tx may have any DestinationTag (or none) — gate is not enforced.
+    withFixture("HASH_TAG_OPTIONAL", buildTx({ DestinationTag: 999 }));
+    const r = await verifyXrplTransaction("HASH_TAG_OPTIONAL", expected); // no destinationTag
+    expect(r.ok).toBe(true);
+  });
 });
 
 function beforeAllMockMode() {

@@ -1,5 +1,26 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- `@paykit/sdk`: `VerifyReason` 추가 — `wrong_destination_tag`, `partial_payment_flag` (Partial Payment exploit + DestinationTag mismatch 별도 reason)
+- `apps/paykit/src/xrpl/verify-tx.ts`:
+  - **Gate 5 — DestinationTag 검증** (intent에 destinationTag가 설정된 경우 정확 매칭 강제)
+  - **Gate 7 — tfPartialPayment flag (0x00020000) 명시적 거부** — Partial Payment exploit 방어. `Amount` 신뢰 금지 + `Flags` bitmap 직접 검사. `TF_PARTIAL_PAYMENT` 상수 export
+  - `RawXrplTx`에 `Flags`, `DestinationTag` 필드 명시
+  - `VerifyExpectations`에 optional `destinationTag` 필드 추가 (backwards-compatible)
+- `apps/paykit/tests/verify-tx.test.ts`: tfPartialPayment 거부 3 케이스 + DestinationTag 4 케이스 (총 7 신규 테스트, verify-tx 통과 17/17)
+- `examples/testnet-live.ts`: testnet 실 결제 + 9-gate 검증 reproducible 데모 (xrpl.js 직접 호출, paykit app env 없이 작동). `pnpm example:testnet-live` 스크립트 추가
+- Root `package.json`: `tsx` + `xrpl` devDeps + `example:testnet-live` 스크립트
+
+### Verified
+- Live testnet 검증: `pnpm example:testnet-live` 9/9 gates PASS
+  - Tx Hash: `2FD03A47760067AEA1CC3FCE2A5DD0E4E1CAD565DFE5354D8D608DE3ECAB637A`
+  - Ledger: 17431228
+  - Explorer: https://livenet.xrpl.org/transactions/2FD03A47760067AEA1CC3FCE2A5DD0E4E1CAD565DFE5354D8D608DE3ECAB637A?network=testnet
+- `pnpm -r typecheck`: clean (3 workspaces)
+- `pnpm -r test`: 38/38 passing (9 sdk + 17 verify-tx + 5 state-machine + 13 drops + 3 memo)
+
 ## [0.1.0] — 2026-05-17 (KFIP 2026 1차 제출)
 
 ### Added
