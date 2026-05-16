@@ -7,7 +7,7 @@
 > **Stripe DX, x402-ready, made for Korea.**
 > XRPL 위에서 5분 안에 결제와 자동 정산을 다는 머천트 SDK.
 
-![status](https://img.shields.io/badge/status-PRD%20v0.3%20frozen%20·%20MVP%20core%20scaffold-green)
+![status](https://img.shields.io/badge/status-live%20testnet%20verified%20·%209%2F9%20gates%20PASS-brightgreen)
 ![tests](https://img.shields.io/badge/tests-9%2F9%20passing-brightgreen)
 ![typescript](https://img.shields.io/badge/TypeScript-strict-blue)
 ![license-core](https://img.shields.io/badge/core-Apache--2.0-blue)
@@ -155,7 +155,8 @@ xrpl-paykit/
 ├── tests/
 │   └── verifier.test.ts    # 9 시나리오 (happy path + 6 게이트 거부 + 2 edge)
 └── examples/
-    └── quickstart.ts       # 5-line merchant integration demo
+    ├── quickstart.ts       # 5-line merchant integration demo (synthesized tx)
+    └── testnet-live.ts     # Live testnet end-to-end (real payment + 9-gate verify)
 ```
 
 **Source LoC**: ~1,140 (src), ~150 (tests), ~150 (examples)
@@ -175,9 +176,10 @@ res.redirect(checkout.getCheckoutUrl(intent.id));
 
 ```bash
 npm install
-npm run typecheck       # tsc --noEmit, strict mode clean
-npm test                # vitest — 9/9 passing
-npm run example:quickstart   # synthesized end-to-end demo
+npm run typecheck                  # tsc --noEmit, strict mode clean
+npm test                           # vitest — 9/9 passing
+npm run example:quickstart         # synthesized end-to-end demo
+npm run example:testnet-live       # ⭐ LIVE testnet payment + 9-gate verify
 ```
 
 Quickstart output validates the canonical attack scenario (Partial Payment exploit) is rejected:
@@ -194,10 +196,14 @@ Quickstart output validates the canonical attack scenario (Partial Payment explo
 ## Status
 
 - **PRD v0.3 동결 완료** — 9-단계 검증·webhook·상태머신·HMAC-SHA256 서명·재시도 7회·멱등성 키 사양 확정
-- **MVP 코어 골격 작성** — TypeScript strict mode, verifier 9 gates 구현 + vitest 9/9 통과, Hosted Checkout/Webhook 모듈 골격, quickstart synthesized 데모 작동 (xrpl.js 실연동·호스팅 페이지는 후속)
-- **Testnet 지갑 활성** — `rNeAi6oLaxGyH3PNijKH4N3Pp8BygKVLCN` (faucet 트랜잭션 1건)
-- **다음 단계** — xrpl.js 연동 (현재 verifier는 synthesized tx로 검증 완료) + Hosted Checkout 호스팅 페이지 + 다중 머천트 통합 테스트
-- **KFIP 2026 1차 제출** — 2026-05-13
+- **MVP 코어 작동 확인** — TypeScript strict mode, verifier 9 gates 구현 + vitest 9/9 통과
+- **🟢 Live testnet 검증 PASS** — xrpl.js 실 연동, testnet 실 결제(1 XRP)에 대해 9/9 gates 모두 통과
+  - Tx Hash: `E103C1A025451EA05BAC11A2EBF2D440049588216596492487C792FDDFB882F6`
+  - Ledger : 17430539
+  - Explorer: https://livenet.xrpl.org/transactions/E103C1A025451EA05BAC11A2EBF2D440049588216596492487C792FDDFB882F6?network=testnet
+- **Testnet 지갑** — sender `rNeAi6oLaxGyH3PNijKH4N3Pp8BygKVLCN` · merchant `r9pQfgH67CdxMzi8d21cJg4o1eixnfawwb`
+- **다음 단계** — Hosted Checkout 호스팅 페이지 + 다중 머천트 통합 테스트 + 메인넷 배포 + XLS-85 Escrows 통합
+- **KFIP 2026 1차 제출** — 2026-05-17
 - **본선 무대** — 6/25 Two IFC Seoul The Forum 3층 (예정)
 
 ---

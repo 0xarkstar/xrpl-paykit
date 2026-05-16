@@ -20,7 +20,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "example:quickstart": "tsx examples/quickstart.ts"
+    "example:quickstart": "tsx examples/quickstart.ts",
+    "example:testnet-live": "tsx examples/testnet-live.ts"
   },
   "dependencies": {
     "xrpl": "^4.0.0"
