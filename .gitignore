@@ -1,0 +1,57 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# build outputs
+.next/
+dist/
+build/
+out/
+*.tsbuildinfo
+.turbo/
+
+# Next.js
+next-env.d.ts
+
+# environments — never commit secrets
+.env
+.env.*
+!.env.example
+
+# local databases
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+*.sqlite
+*.sqlite3
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite-journal
+
+# secrets / keys
+*.pem
+*.key
+.mcp.json
+
+# protected paths (CLAUDE.md §9.2 — 로컬 전용)
+CLAUDE.md
+.claude/
+docs/research/
+
+# logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
+*.swp

@@ -1,0 +1,21 @@
+{
+  "name": "xrpl-paykit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "XRPL PayKit — Stripe-like payment intent + signed webhook DX for XRPL apps.",
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "dev": "pnpm --parallel --filter \"./apps/*\" dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint",
+    "db:push": "pnpm -F @paykit/paykit db:push",
+    "db:generate": "pnpm -F @paykit/paykit db:generate"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0",
+    "@types/node": "^20.12.0"
+  }
+}

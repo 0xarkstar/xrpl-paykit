@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 6% 6%;
+    --foreground: 240 5% 96%;
+    --card: 240 6% 9%;
+    --card-foreground: 240 5% 96%;
+    --muted: 240 4% 14%;
+    --muted-foreground: 240 4% 64%;
+    --border: 240 4% 18%;
+    --input: 240 4% 16%;
+    --primary: 234 89% 74%;
+    --primary-foreground: 240 6% 8%;
+    --destructive: 0 72% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 145 63% 55%;
+    --warning: 38 92% 60%;
+    --radius: 0.5rem;
+  }
+
+  * { @apply border-border; }
+  html {
+    color-scheme: dark;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -20%, hsla(234,89%,74%,0.15), transparent 70%),
+      hsl(var(--background));
+  }
+  body { @apply text-foreground; background: transparent; }
+  ::selection { background: hsla(234, 89%, 74%, 0.3); color: hsl(var(--foreground)); }
+}
+
+@layer utilities {
+  .glow-primary {
+    box-shadow: 0 0 0 1px hsla(234, 89%, 74%, 0.2), 0 8px 32px -8px hsla(234, 89%, 74%, 0.25);
+  }
+  .glow-success {
+    box-shadow: 0 0 0 1px hsla(145, 63%, 55%, 0.2), 0 8px 32px -8px hsla(145, 63%, 55%, 0.25);
+  }
+  .grid-bg {
+    background-image:
+      linear-gradient(hsl(var(--border)) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px);
+    background-size: 32px 32px;
+    background-position: -1px -1px;
+  }
+}
