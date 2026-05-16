@@ -219,21 +219,23 @@ dev 재시작하면 fixture 대신 실 Xaman 결제 흐름으로 자동 전환.
 
 ---
 
-## 9개 검증 조건 (PRD §8.4)
+## 9-단계 검증 게이트 (PRD §8.4)
 
-PayKit이 결제 1건을 `succeeded`로 만들기 전 통과시키는 검증:
+PayKit이 결제 1건을 `succeeded`로 만들기 전 통과시키는 9개 게이트 (AND 결합):
 
-1. transaction이 XRPL에 존재
-2. `validated: true`
-3. `meta.TransactionResult === "tesSUCCESS"`
-4. `TransactionType === "Payment"`
-5. `Destination === merchantAddress`
-6. `meta.delivered_amount === expectedDrops` (정확 일치, partial payment 차단)
-7. memo `paykit.intent` decode → `intentId` 매칭
-8. tx hash 미사용 (DB UNIQUE 강제)
-9. intent `expiresAt > now`
+1. **validated** — `tx.validated === true` (validated ledger만 신뢰)
+2. **tesSUCCESS** — `meta.TransactionResult === "tesSUCCESS"` (tec*/ter* 거부)
+3. **isPayment** — `TransactionType === "Payment"`
+4. **destinationMatch** — `Destination === merchantAddress`
+5. **destinationTagMatch** — intent에 `destinationTag` 설정 시 정확 매칭 강제 (본인 보강 ✓)
+6. **deliveredAmountExact** — `meta.delivered_amount === expectedDrops` (XRP=string / IOU=3-field)
+7. **notPartialPayment** — `(Flags & 0x00020000) === 0` — **tfPartialPayment 플래그 명시 거부 (Partial Payment exploit 방어, 본인 보강 ✓)**
+8. **memoIntentIdMatch** — memo `paykit.intent` decode → `intentId` 정확 매칭
+9. **txHashUnused** — DB UNIQUE 강제 (race-safe lookup)
 
-실패 시 사유 코드: `tx_not_found`, `tx_not_validated`, `tx_failed`, `not_payment`, `wrong_destination`, `wrong_amount`, `partial_payment_not_supported`, `missing_memo`, `memo_decode_failed`, `intent_mismatch`, `duplicate_tx`, `intent_expired`.
+실패 시 사유 코드: `tx_not_found` · `tx_not_validated` · `tx_failed` · `not_payment` · `wrong_destination` · `wrong_destination_tag` · `wrong_amount` · `partial_payment_not_supported` · `partial_payment_flag` · `missing_memo` · `memo_decode_failed` · `intent_mismatch` · `duplicate_tx` · `intent_expired`
+
+→ 자세한 사양은 [`docs/PRD.md` §8.4](./docs/PRD.md) · [`apps/paykit/src/xrpl/verify-tx.ts`](./apps/paykit/src/xrpl/verify-tx.ts) · live testnet 9/9 PASS 재현 → `pnpm example:testnet-live`
 
 ---
 
@@ -396,6 +398,45 @@ npx pnpm@9 -r test          # SDK 9개 + paykit 31개 통과
 | `pnpm dev` 두 app 중 하나만 시작 | `apps/*/next.config.mjs` 확인 (Next.js 14는 `.ts` config 미지원) |
 | `:3000` 또는 `:3001` 포트 이미 사용 중 | PowerShell: `Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue \| Select-Object -ExpandProperty OwningProcess \| ForEach-Object { Stop-Process -Id $_ -Force }` |
 | Next.js cache 꼬임 | `Remove-Item -Recurse -Force apps/paykit/.next, apps/demo-merchant/.next` 후 재시작 |
+
+---
+
+## Roadmap
+
+PayKit은 KFIP 운영 측이 명시한 **"현 규제 환경 단계적 접근"** 기준에 정렬된 단계별 출시 계획을 갖고 있습니다. 자세한 사양은 [`docs/PRD.md` §11](./docs/PRD.md) 참고.
+
+### MVP (지금 ~ 본선 6/25)
+- testnet XRP + Xaman mock + Hosted Checkout + 9-단계 검증 + Signed Webhook
+- 두 vertical demo: Fan Art Image Unlock + Premium AI Search
+- design partner 머천트 2곳 어트랙션 + Bluenode 학회 internal 베타 적용 시도
+- 전자금융보조업자 포지션 (PG·VASP 라이선스 불필요)
+
+### v1.0 (3–6개월)
+- **RLUSD 메인넷 결제** (코인원 KRW 페어 활용, 2026-04 상장)
+- **XLS-85 Token-Enabled Escrows** — 머천트 즉시 정산 락업 (카드 D+2 → XRPL 초 단위)
+- Web3Auth XRPL 임베디드 지갑 옵션 (K-콘텐츠 소셜 로그인)
+- 머천트 대시보드 + `@paykit/sdk` v1.0 정식 출시
+- 첫 유료 머천트 5곳 (거래액의 0.5%)
+
+### v2.0 (6–18개월)
+- **Multi-Surface Payments** — XRPL Mainnet(XRP/RLUSD) + XRPL EVM Sidechain(wXRP/USDC) 단일 Intent 처리
+- **Cross-Currency Pathfinding** — 사용자 XRP 결제 → 머천트 RLUSD 자동 환전 (native ledger)
+- **XLS-47 Price Oracles** — RLUSD/KRW 동적 가격 책정
+- **x402 Facilitator Adapter** (t54.ai + self-hosted) — AI 에이전트 결제 표준 진입
+- B2B 엔터프라이즈 진출 (K-콘텐츠 플랫폼·AI 에이전트 마켓플레이스)
+
+### v2+ (장기)
+- **XLS-33 MPT** (Multi-Purpose Tokens) — 머천트별 issued unlock token·멤버십·소장 인증 표준화
+- 토스·IBK 파트너 연계 — PG 라이선스 검토 또는 면허 사업자 제휴
+- 한국 외 시장 (일본·동남아 K-콘텐츠 팬덤 거점)
+
+**XRPL 고유 프리미티브 활용 (KFIP rubric 9개 중 4개)**: XLS-85 (v1.0) · Cross-Currency Pathfinding (v2.0) · XLS-47 (v2.0) · XLS-33 MPT (v2+). EVM 체인에서 이 구조를 재현하려면 외부 정산 컨트랙트 + 외부 DEX 라우터 + 외부 oracle 인프라 + 외부 토큰 표준을 별도 구축해야 합니다.
+
+---
+
+## 보안
+
+[`SECURITY.md`](./SECURITY.md) 참고. testnet only · custody-free design · WEBHOOK_URL_ALLOWLIST(SSRF 차단) · HMAC-SHA256 raw-body signing · constant-time verify.
 
 ---
 

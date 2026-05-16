@@ -1,0 +1,63 @@
+# XRPL PayKit — Local dev compose
+#
+# 두 Next.js app(:3000 + :3001)을 컨테이너로 띄웁니다.
+# SQLite는 호스트 volume에 마운트해 컨테이너 재시작 후에도 데이터 유지.
+#
+# 사용법:
+#   1. .env 파일 준비 (apps/paykit/.env + apps/demo-merchant/.env)
+#      — node -e "console.log('K='+require('crypto').randomBytes(32).toString('hex'))" 로
+#         PAYKIT_API_KEY + PAYKIT_WEBHOOK_SECRET 생성
+#   2. docker compose up --build
+#   3. open http://localhost:3001 → "Unlock with XRP" → mock 결제 → unlock
+#
+# Prod deploy 시 mainnet 키·시드는 코드/이미지에 절대 포함 X (SECURITY.md 참고).
+
+services:
+  paykit:
+    build:
+      context: .
+      dockerfile: docker/paykit.Dockerfile
+    container_name: xrpl-paykit-core
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - apps/paykit/.env
+    volumes:
+      # SQLite persistent across container restarts
+      - paykit-db:/app/apps/paykit
+    networks:
+      - paykit-net
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  demo-merchant:
+    build:
+      context: .
+      dockerfile: docker/demo-merchant.Dockerfile
+    container_name: xrpl-paykit-demo
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    env_file:
+      - apps/demo-merchant/.env
+    depends_on:
+      paykit:
+        condition: service_healthy
+    networks:
+      - paykit-net
+    environment:
+      # demo-merchant가 컨테이너 내에서 paykit core 호출할 때
+      - PAYKIT_BASE_URL=http://paykit:3000
+
+volumes:
+  paykit-db:
+    driver: local
+
+networks:
+  paykit-net:
+    driver: bridge
