@@ -11,15 +11,25 @@
   - `VerifyExpectations`에 optional `destinationTag` 필드 추가 (backwards-compatible)
 - `apps/paykit/tests/verify-tx.test.ts`: tfPartialPayment 거부 3 케이스 + DestinationTag 4 케이스 (총 7 신규 테스트, verify-tx 통과 17/17)
 - `examples/testnet-live.ts`: testnet 실 결제 + 9-gate 검증 reproducible 데모 (xrpl.js 직접 호출, paykit app env 없이 작동). `pnpm example:testnet-live` 스크립트 추가
-- Root `package.json`: `tsx` + `xrpl` devDeps + `example:testnet-live` 스크립트
+- Root `package.json`: `tsx` + `xrpl` + `puppeteer` devDeps + `example:testnet-live` 스크립트
+- README 상단 status badges: tests 38/38 · TypeScript strict · Node 20+/pnpm 9 · XRPL testnet · live-testnet 9/9 PASS (explorer link 포함)
+- README "Live preview" 섹션 — `docs/screenshots/` 5장 embed (PayKit home · quickstart · examples · K-pop Fan Art Unlock · demo-merchant)
+- `docs/screenshots/01~05.png`: Puppeteer headless 캡쳐(1440x900 @2x), 작동 중인 :3000 + :3001 실제 상태
+- `docs/proofs/testnet-live-output.txt`: testnet 실 결제 9/9 gate verification console transcript (ANSI 제거)
+- `scripts/screenshot.mjs`: 재현 가능한 Puppeteer 자동 캡쳐 스크립트
+- KFIP 2026 평가 rubric "Blockchain Usage 상" 매핑 강화: XLS-85 (Token-Enabled Escrows, v1.0) + Cross-Currency Pathfinding (v2.0) + XLS-47 (Price Oracles, v2.0) + XLS-33 (MPT, v2+) 명시 — rubric 9 고급 기능 중 4개 활용 로드맵
 
 ### Verified
-- Live testnet 검증: `pnpm example:testnet-live` 9/9 gates PASS
+- Live testnet 검증 #1: `pnpm example:testnet-live` 9/9 gates PASS
   - Tx Hash: `2FD03A47760067AEA1CC3FCE2A5DD0E4E1CAD565DFE5354D8D608DE3ECAB637A`
   - Ledger: 17431228
   - Explorer: https://livenet.xrpl.org/transactions/2FD03A47760067AEA1CC3FCE2A5DD0E4E1CAD565DFE5354D8D608DE3ECAB637A?network=testnet
+- Live testnet 검증 #2 (재현성 확인): 9/9 gates PASS
+  - Tx Hash: `236D658AB83C8B83537E5F83699327DDFF00621E2FEB2BF0A95E8839222C3293`
+  - Explorer: https://livenet.xrpl.org/transactions/236D658AB83C8B83537E5F83699327DDFF00621E2FEB2BF0A95E8839222C3293?network=testnet
 - `pnpm -r typecheck`: clean (3 workspaces)
 - `pnpm -r test`: 38/38 passing (9 sdk + 17 verify-tx + 5 state-machine + 13 drops + 3 memo)
+- `pnpm dev` :3000 + :3001 두 서버 정상 가동 — Puppeteer 자동 캡쳐로 시각 증빙 확보
 
 ## [0.1.0] — 2026-05-17 (KFIP 2026 1차 제출)
 

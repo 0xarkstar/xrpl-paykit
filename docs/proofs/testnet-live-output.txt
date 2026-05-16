@@ -1,0 +1,44 @@
+
+> xrpl-paykit@0.1.0 example:testnet-live /Users/arkstar/Projects/xrpl-paykit
+> tsx examples/testnet-live.ts
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+XRPL PayKit — Live Testnet End-to-End Verification
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[1] PaymentIntent (synthesized for demo)
+    id          : xpk_demo_mp8uk58t
+    destination : r9pQfgH67CdxMzi8d21cJg4o1eixnfawwb
+    amount      : 1 XRP (1,000,000 drops)
+
+[2] Connected to XRPL testnet: wss://s.altnet.rippletest.net:51233
+    sender      : rNeAi6oLaxGyH3PNijKH4N3Pp8BygKVLCN
+
+[3] Submitting Payment to testnet...
+    tx hash     : 236D658AB83C8B83537E5F83699327DDFF00621E2FEB2BF0A95E8839222C3293
+    ledger      : 17431805
+    explorer    : https://livenet.xrpl.org/transactions/236D658AB83C8B83537E5F83699327DDFF00621E2FEB2BF0A95E8839222C3293?network=testnet
+
+[4] Fetching tx from ledger for ground-truth verification...
+
+[5] Running 9-gate verifier (mirrors apps/paykit/src/xrpl/verify-tx.ts)...
+
+    Per-gate results:
+      [✓] validated
+      [✓] tesSUCCESS
+      [✓] isPayment
+      [✓] destinationMatch
+      [✓] destinationTagMatch
+      [✓] notPartialPayment
+      [✓] deliveredAmountExact
+      [✓] memoIntentIdMatch
+      [✓] txHashUnused
+
+[6] Verdict
+    verified    : true
+    tx hash     : 236D658AB83C8B83537E5F83699327DDFF00621E2FEB2BF0A95E8839222C3293
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Live verification: PASS ✓
+Explorer: https://livenet.xrpl.org/transactions/236D658AB83C8B83537E5F83699327DDFF00621E2FEB2BF0A95E8839222C3293?network=testnet
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
