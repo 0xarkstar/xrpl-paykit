@@ -91,8 +91,8 @@ payment intent → hosted checkout (Xaman QR)
 
 ```powershell
 # Windows PowerShell 기준
-git clone https://github.com/seongil06/xrpl_2026_test.git
-cd xrpl_2026_test
+git clone https://github.com/0xarkstar/xrpl-paykit.git
+cd xrpl-paykit
 
 # 의존성 설치 (3~7분, better-sqlite3 native build 포함)
 npx pnpm@9 install

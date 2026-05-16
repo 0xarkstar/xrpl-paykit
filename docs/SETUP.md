@@ -5,8 +5,8 @@ README의 PowerShell 자동 스크립트가 복잡하면 이 절차로.
 ## 1. 의존성
 
 ```powershell
-git clone https://github.com/seongil06/xrpl_2026_test.git
-cd xrpl_2026_test
+git clone https://github.com/0xarkstar/xrpl-paykit.git
+cd xrpl-paykit
 npx pnpm@9 install
 ```
 

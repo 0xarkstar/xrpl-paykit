@@ -42,7 +42,7 @@ export default function HomePage() {
             <a className="font-mono text-muted-foreground hover:text-foreground hover:underline" href="https://testnet.xrpl.org" target="_blank" rel="noreferrer">
               XRPL testnet <span className="text-primary">↗</span>
             </a>
-            <a className="font-mono text-muted-foreground hover:text-foreground hover:underline" href="https://github.com/seongil06/xrpl_2026_test" target="_blank" rel="noreferrer">
+            <a className="font-mono text-muted-foreground hover:text-foreground hover:underline" href="https://github.com/0xarkstar/xrpl-paykit" target="_blank" rel="noreferrer">
               github <span className="text-primary">↗</span>
             </a>
           </nav>
@@ -57,7 +57,7 @@ export default function HomePage() {
           </p>
           <p>
             <span className="text-primary">$</span> 리셋: 우측 Status 카드 <code className="text-foreground">↻</code> 버튼 ·
-            소스: <a className="text-foreground hover:underline" href="https://github.com/seongil06/xrpl_2026_test" target="_blank" rel="noreferrer">github.com/seongil06/xrpl_2026_test</a>
+            소스: <a className="text-foreground hover:underline" href="https://github.com/0xarkstar/xrpl-paykit" target="_blank" rel="noreferrer">github.com/0xarkstar/xrpl-paykit</a>
           </p>
         </footer>
       </div>

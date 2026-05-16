@@ -129,7 +129,7 @@ if (event.type === "payment_intent.succeeded") {
         </section>
 
         <section className="grid sm:grid-cols-2 gap-3 text-sm">
-          <a href="https://github.com/seongil06/xrpl_2026_test" target="_blank" rel="noreferrer" className="bg-card border border-border rounded-lg p-4 hover:border-primary/40 hover:bg-muted/30 transition-colors block">
+          <a href="https://github.com/0xarkstar/xrpl-paykit" target="_blank" rel="noreferrer" className="bg-card border border-border rounded-lg p-4 hover:border-primary/40 hover:bg-muted/30 transition-colors block">
             <p className="font-mono text-xs text-muted-foreground">→ GitHub repository</p>
             <p className="mt-1 font-medium">소스 · README · 5분 quickstart</p>
           </a>
@@ -141,7 +141,7 @@ if (event.type === "payment_intent.succeeded") {
 
         <footer className="text-xs font-mono text-muted-foreground border-t border-border pt-6 space-y-1">
           <p><span className="text-primary">$</span> mode: XAMAN_MODE=mock (default)</p>
-          <p><span className="text-primary">$</span> github: github.com/seongil06/xrpl_2026_test</p>
+          <p><span className="text-primary">$</span> github: github.com/0xarkstar/xrpl-paykit</p>
         </footer>
       </div>
     </main>

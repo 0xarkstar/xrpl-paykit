@@ -47,7 +47,7 @@ export function SiteNav() {
             Demo <span className="text-xs opacity-60">↗</span>
           </a>
           <a
-            href="https://github.com/seongil06/xrpl_2026_test"
+            href="https://github.com/0xarkstar/xrpl-paykit"
             target="_blank"
             rel="noreferrer"
             className="px-3 py-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors flex items-center gap-1.5"

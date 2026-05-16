@@ -20,8 +20,8 @@ const STEPS: Step[] = [
     n: 1,
     title: "Clone & install",
     detail: "monorepo (sdk + paykit core + demo-merchant) 한 번에 설치. better-sqlite3 native build 포함 3~7분.",
-    code: `git clone https://github.com/seongil06/xrpl_2026_test.git
-cd xrpl_2026_test
+    code: `git clone https://github.com/0xarkstar/xrpl-paykit.git
+cd xrpl-paykit
 npx pnpm@9 install`,
     language: "bash",
     hint: "Windows에서 pnpm 못 찾으면 'npx pnpm@9' 그대로 쓰면 됨. 따로 install 안 해도 OK.",
@@ -118,7 +118,7 @@ export default function QuickstartPage() {
             <li className="flex items-baseline gap-2">
               <ArrowRight className="w-3 h-3 text-primary shrink-0 translate-y-0.5" />
               <a
-                href="https://github.com/seongil06/xrpl_2026_test#api-contract"
+                href="https://github.com/0xarkstar/xrpl-paykit#api-contract"
                 target="_blank"
                 rel="noreferrer"
                 className="text-primary hover:underline inline-flex items-center gap-1"

@@ -249,7 +249,7 @@ export default function KpopExamplePage() {
               다른 예시
             </Link>
             <a
-              href="https://github.com/seongil06/xrpl_2026_test"
+              href="https://github.com/0xarkstar/xrpl-paykit"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md border border-border bg-card text-sm hover:border-primary/40 transition-colors"
