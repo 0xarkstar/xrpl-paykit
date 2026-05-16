@@ -55,3 +55,6 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# OMC local session state (private — DO NOT commit)
+.omc/
