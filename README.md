@@ -3,6 +3,30 @@
 > **Stripe-like payment intent + signed webhook DX for the XRP Ledger.**
 > Built for [KFIP 2026](https://program.xrplkorea.org/) (Korea Financial Innovation Program) 1차 제출.
 
+![status](https://img.shields.io/badge/status-MVP%20core%20·%20testnet%20verified-brightgreen)
+![tests](https://img.shields.io/badge/tests-38%2F38%20passing-brightgreen)
+![typescript](https://img.shields.io/badge/TypeScript-strict-blue)
+![runtime](https://img.shields.io/badge/runtime-Node%2020%2B%20·%20pnpm%209-blue)
+![network](https://img.shields.io/badge/network-XRPL%20testnet-black)
+[![live-testnet](https://img.shields.io/badge/live%20testnet-9%2F9%20gates%20PASS-success)](https://livenet.xrpl.org/transactions/2FD03A47760067AEA1CC3FCE2A5DD0E4E1CAD565DFE5354D8D608DE3ECAB637A?network=testnet)
+
+**Live testnet 검증 (reproducible)** — `pnpm example:testnet-live` 9/9 gates PASS.
+Tx `2FD03A47…637A` · ledger 17431228 · [explorer →](https://livenet.xrpl.org/transactions/2FD03A47760067AEA1CC3FCE2A5DD0E4E1CAD565DFE5354D8D608DE3ECAB637A?network=testnet)
+
+---
+
+## Live preview (스크린샷)
+
+작동 중인 PayKit core (:3000) + demo-merchant (:3001). 모두 mock 모드 default — Xaman API key 없이 결제 흐름 끝까지 재현.
+
+| 화면 | 미리보기 |
+|---|---|
+| **PayKit core home** — Stripe-like payments for XRPL, 3-layer 아키텍처, SDK example | [docs/screenshots/01-paykit-home.png](./docs/screenshots/01-paykit-home.png) |
+| **5분 quickstart** — `git clone` → `pnpm install` → `pnpm dev` 60초 가이드 | [docs/screenshots/02-paykit-quickstart.png](./docs/screenshots/02-paykit-quickstart.png) |
+| **Examples gallery** — K-pop fan art · Premium AI search 등 vertical 패턴 | [docs/screenshots/03-paykit-examples.png](./docs/screenshots/03-paykit-examples.png) |
+| **K-pop Fan Art Unlock** — 글로벌 팬덤 결제 인프라 (Cross-Currency · MPT v2 · Oracle v2 활용 narrative) | [docs/screenshots/04-fan-art-unlock.png](./docs/screenshots/04-fan-art-unlock.png) |
+| **demo-merchant (:3001)** — Premium AI Search unlock mock 가맹점, 9-gate 검증 → signed webhook → resource unlock 전 흐름 시연 | [docs/screenshots/05-demo-merchant.png](./docs/screenshots/05-demo-merchant.png) |
+
 ```ts
 import { PaykitClient } from "@paykit/sdk";
 
