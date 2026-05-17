@@ -1,0 +1,102 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+XRPL PayKit — Live Testnet 5-Scenario Suite
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Connected: wss://s.altnet.rippletest.net:51233
+
+[setup] Requesting funded testnet wallets from XRPL faucet...
+  sender   : r9pRpntQKPyZLaXCLiiBswApkkapw5UGSs  (balance 100 XRP)
+  merchant : rDt38vMLezoJccKfmc3UNX4KuUxso81QdZ  (balance 100 XRP)
+
+[1] happy_path — 1 XRP with matching memo
+
+  Tx hash  : CEF8E2EB94279825225D65E6E574B481B58E7B54C2B81C764807F2CDA0223E35
+  Ledger   : 17445492
+  Explorer : https://livenet.xrpl.org/transactions/CEF8E2EB94279825225D65E6E574B481B58E7B54C2B81C764807F2CDA0223E35?network=testnet
+  Gates    :
+    [✓] validated
+    [✓] tesSUCCESS
+    [✓] isPayment
+    [✓] destinationMatch
+    [✓] destinationTagMatch
+    [✓] notPartialPayment
+    [✓] deliveredAmountExact
+    [✓] memoIntentIdMatch
+    [✓] txHashUnused
+  Verdict  : PASS
+
+[2] wrong_amount — sender delivers 0.5 XRP instead of 1 XRP
+
+  Tx hash  : B04418DC37BE22B13360618AC5D5EFCAD8A09D1ACB5F0D431D2A15C67E4ACBA1
+  Ledger   : 17445494
+  Explorer : https://livenet.xrpl.org/transactions/B04418DC37BE22B13360618AC5D5EFCAD8A09D1ACB5F0D431D2A15C67E4ACBA1?network=testnet
+  Gates    :
+    [✓] validated
+    [✓] tesSUCCESS
+    [✓] isPayment
+    [✓] destinationMatch
+    [✓] destinationTagMatch
+    [✓] notPartialPayment
+    [✗] deliveredAmountExact  — delivered="500000" expected=1000000
+    [✓] memoIntentIdMatch
+    [✓] txHashUnused
+  Verdict  : FAIL_AS_EXPECTED
+
+[3] missing_memo — no xpk:intent Memo at all
+
+  Tx hash  : 7FEDC7730C7926BAC651B2624D87D915963D029CF3DCB927A4CCA6D1FA750F2A
+  Ledger   : 17445496
+  Explorer : https://livenet.xrpl.org/transactions/7FEDC7730C7926BAC651B2624D87D915963D029CF3DCB927A4CCA6D1FA750F2A?network=testnet
+  Gates    :
+    [✓] validated
+    [✓] tesSUCCESS
+    [✓] isPayment
+    [✓] destinationMatch
+    [✓] destinationTagMatch
+    [✓] notPartialPayment
+    [✓] deliveredAmountExact
+    [✗] memoIntentIdMatch  — memo=<none> expected=xpk_nomemo_mp9jl4e2
+    [✓] txHashUnused
+  Verdict  : FAIL_AS_EXPECTED
+
+[4] wrong_destination_tag — intent requires DestinationTag=42, tx has none
+
+  Tx hash  : 4D2BADDDE448A4156B2EA1D2F4324177F6F6BAEE9D2089C407F24AB901CF5C8E
+  Ledger   : 17445498
+  Explorer : https://livenet.xrpl.org/transactions/4D2BADDDE448A4156B2EA1D2F4324177F6F6BAEE9D2089C407F24AB901CF5C8E?network=testnet
+  Gates    :
+    [✓] validated
+    [✓] tesSUCCESS
+    [✓] isPayment
+    [✓] destinationMatch
+    [✗] destinationTagMatch  — expected 42, got <missing>
+    [✓] notPartialPayment
+    [✓] deliveredAmountExact
+    [✓] memoIntentIdMatch
+    [✓] txHashUnused
+  Verdict  : FAIL_AS_EXPECTED
+
+[5] partial_payment_flag — tfPartialPayment (0x00020000) bit set
+
+  Outcome  : XRPL network refused to record the tx
+  Reason   : temBAD_SEND_XRP_MAX
+  Defense  : tx never reached the ledger — verifier gate not exercised live
+             gate logic for "notPartialPayment" is covered by unit tests
+  Verdict  : NETWORK_REJECTED_AS_EXPECTED
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  [✓] happy_path               PASS                            (expected all-pass)
+       tx: CEF8E2EB94279825225D65E6E574B481B58E7B54C2B81C764807F2CDA0223E35
+  [✓] wrong_amount             FAIL_AS_EXPECTED                (expected fail @ deliveredAmountExact)
+       tx: B04418DC37BE22B13360618AC5D5EFCAD8A09D1ACB5F0D431D2A15C67E4ACBA1
+  [✓] missing_memo             FAIL_AS_EXPECTED                (expected fail @ memoIntentIdMatch)
+       tx: 7FEDC7730C7926BAC651B2624D87D915963D029CF3DCB927A4CCA6D1FA750F2A
+  [✓] wrong_destination_tag    FAIL_AS_EXPECTED                (expected fail @ destinationTagMatch)
+       tx: 4D2BADDDE448A4156B2EA1D2F4324177F6F6BAEE9D2089C407F24AB901CF5C8E
+  [✓] partial_payment_flag     NETWORK_REJECTED_AS_EXPECTED    (expected fail @ notPartialPayment)
+       network refused: temBAD_SEND_XRP_MAX
+
+Suite verdict: ALL EXPECTED ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

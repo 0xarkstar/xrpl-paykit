@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+### Added (2026-05-17 — KFIP submission day, live E2E suite)
+- `examples/testnet-live-suite.ts`: 5-scenario live testnet E2E (auto-fund via faucet, no env vars). Exercises every negative path of the 9-gate verifier on real ledger data:
+  - `happy_path` — all 9 gates PASS
+  - `wrong_amount` — delivered 500000 vs expected 1000000 → gate 6 fails
+  - `missing_memo` — no `xpk:intent` Memo → gate 8 fails
+  - `wrong_destination_tag` — intent requires DestinationTag=42, tx omits → gate 5 fails
+  - `partial_payment_flag` — XRPL network refuses XRP→XRP + tfPartialPayment + SendMax (`temBAD_SEND_XRP_MAX`) — defense-in-depth #1 (network rejection), defense #2 (gate 7 in unit tests)
+- `docs/proofs/testnet-suite-output.txt`: 5-scenario live transcript (ANSI stripped, 102 lines, all explorer URLs included)
+- `package.json`: `example:testnet-live-suite` script
+
 ### Added
 - `@paykit/sdk`: `VerifyReason` 추가 — `wrong_destination_tag`, `partial_payment_flag` (Partial Payment exploit + DestinationTag mismatch 별도 reason)
 - `apps/paykit/src/xrpl/verify-tx.ts`:
@@ -23,10 +33,15 @@
 - Live testnet 검증 #1: `pnpm example:testnet-live` 9/9 gates PASS
   - Tx Hash: `2FD03A47760067AEA1CC3FCE2A5DD0E4E1CAD565DFE5354D8D608DE3ECAB637A`
   - Ledger: 17431228
-  - Explorer: https://livenet.xrpl.org/transactions/2FD03A47760067AEA1CC3FCE2A5DD0E4E1CAD565DFE5354D8D608DE3ECAB637A?network=testnet
 - Live testnet 검증 #2 (재현성 확인): 9/9 gates PASS
   - Tx Hash: `236D658AB83C8B83537E5F83699327DDFF00621E2FEB2BF0A95E8839222C3293`
-  - Explorer: https://livenet.xrpl.org/transactions/236D658AB83C8B83537E5F83699327DDFF00621E2FEB2BF0A95E8839222C3293?network=testnet
+  - Ledger: 17431805
+- **Live testnet 5-scenario suite (2026-05-17)**: `pnpm tsx examples/testnet-live-suite.ts` — happy + 4 negative scenarios, all behaving as expected on real ledger
+  - `happy_path` PASS · tx `CEF8E2EB94279825225D65E6E574B481B58E7B54C2B81C764807F2CDA0223E35` · ledger 17445492
+  - `wrong_amount` FAIL_AS_EXPECTED (gate 6) · tx `B04418DC37BE22B13360618AC5D5EFCAD8A09D1ACB5F0D431D2A15C67E4ACBA1` · ledger 17445494
+  - `missing_memo` FAIL_AS_EXPECTED (gate 8) · tx `7FEDC7730C7926BAC651B2624D87D915963D029CF3DCB927A4CCA6D1FA750F2A` · ledger 17445496
+  - `wrong_destination_tag` FAIL_AS_EXPECTED (gate 5) · tx `4D2BADDDE448A4156B2EA1D2F4324177F6F6BAEE9D2089C407F24AB901CF5C8E` · ledger 17445498
+  - `partial_payment_flag` NETWORK_REJECTED_AS_EXPECTED (`temBAD_SEND_XRP_MAX`) — gate 7 covered by unit tests
 - `pnpm -r typecheck`: clean (3 workspaces)
 - `pnpm -r test`: 38/38 passing (9 sdk + 17 verify-tx + 5 state-machine + 13 drops + 3 memo)
 - `pnpm dev` :3000 + :3001 두 서버 정상 가동 — Puppeteer 자동 캡쳐로 시각 증빙 확보

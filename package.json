@@ -12,7 +12,8 @@
     "lint": "pnpm -r lint",
     "db:push": "pnpm -F @paykit/paykit db:push",
     "db:generate": "pnpm -F @paykit/paykit db:generate",
-    "example:testnet-live": "tsx examples/testnet-live.ts"
+    "example:testnet-live": "tsx examples/testnet-live.ts",
+    "example:testnet-live-suite": "tsx examples/testnet-live-suite.ts"
   },
   "devDependencies": {
     "@types/node": "^20.12.0",
