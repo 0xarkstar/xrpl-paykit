@@ -6,7 +6,7 @@
  *   2. Waits for the validated ledger
  *   3. Fetches the tx
  *   4. Runs the 9-gate verifier (incl. tfPartialPayment + DestinationTag)
- *   5. Prints per-gate results + tx hash + livenet.xrpl.org explorer URL
+ *   5. Prints per-gate results + tx hash + testnet.xrpl.org explorer URL
  *
  * Usage (testnet faucet-funded sender + merchant address):
  *
@@ -25,7 +25,7 @@ import { Client, Wallet, convertStringToHex } from "xrpl";
 // ─────────────────────────────────────────────────────────────────────
 
 const XRPL_TESTNET = "wss://s.altnet.rippletest.net:51233";
-const EXPLORER = "https://livenet.xrpl.org";
+const EXPLORER = "https://testnet.xrpl.org";
 
 const SENDER_SEED = process.env.SENDER_SEED;
 const MERCHANT_ADDRESS = process.env.MERCHANT_ADDRESS;
@@ -195,7 +195,7 @@ async function main() {
     const ledgerIndex = (submitResult.result as { ledger_index?: number }).ledger_index;
     console.log("    tx hash     :", txHash);
     console.log("    ledger      :", ledgerIndex);
-    console.log("    explorer    :", `${EXPLORER}/transactions/${txHash}?network=testnet`);
+    console.log("    explorer    :", `${EXPLORER}/transactions/${txHash}`);
 
     console.log("\n[4] Fetching tx from ledger for ground-truth verification...");
     const txResp = await client.request({
@@ -220,7 +220,7 @@ async function main() {
 
     console.log("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
     console.log("Live verification:", allPassed ? "PASS ✓" : "FAIL ✗");
-    console.log("Explorer:", `${EXPLORER}/transactions/${txHash}?network=testnet`);
+    console.log("Explorer:", `${EXPLORER}/transactions/${txHash}`);
     console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 
     if (!allPassed) process.exit(1);

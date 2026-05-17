@@ -8,7 +8,7 @@
 ![typescript](https://img.shields.io/badge/TypeScript-strict-blue)
 ![runtime](https://img.shields.io/badge/runtime-Node%2020%2B%20·%20pnpm%209-blue)
 ![network](https://img.shields.io/badge/network-XRPL%20testnet-black)
-[![live-testnet](https://img.shields.io/badge/live%20testnet-9%2F9%20gates%20PASS-success)](https://livenet.xrpl.org/transactions/CEF8E2EB94279825225D65E6E574B481B58E7B54C2B81C764807F2CDA0223E35?network=testnet)
+[![live-testnet](https://img.shields.io/badge/live%20testnet-9%2F9%20gates%20PASS-success)](https://testnet.xrpl.org/transactions/CEF8E2EB94279825225D65E6E574B481B58E7B54C2B81C764807F2CDA0223E35)
 [![scenario-suite](https://img.shields.io/badge/live%20suite-5%2F5%20expected%20behaviors-success)](./docs/proofs/testnet-suite-output.txt)
 
 **Live testnet 검증 (reproducible)** — `pnpm example:testnet-live` 9/9 gates PASS.
@@ -17,10 +17,10 @@
 
 | # | Scenario | Verdict | Tx |
 |---|---|---|---|
-| 1 | happy_path | PASS (9/9 gates) | [`CEF8E2EB…223E35`](https://livenet.xrpl.org/transactions/CEF8E2EB94279825225D65E6E574B481B58E7B54C2B81C764807F2CDA0223E35?network=testnet) |
-| 2 | wrong_amount | FAIL_AS_EXPECTED (gate 6) | [`B04418DC…ACBA1`](https://livenet.xrpl.org/transactions/B04418DC37BE22B13360618AC5D5EFCAD8A09D1ACB5F0D431D2A15C67E4ACBA1?network=testnet) |
-| 3 | missing_memo | FAIL_AS_EXPECTED (gate 8) | [`7FEDC773…750F2A`](https://livenet.xrpl.org/transactions/7FEDC7730C7926BAC651B2624D87D915963D029CF3DCB927A4CCA6D1FA750F2A?network=testnet) |
-| 4 | wrong_destination_tag | FAIL_AS_EXPECTED (gate 5) | [`4D2BADDD…CF5C8E`](https://livenet.xrpl.org/transactions/4D2BADDDE448A4156B2EA1D2F4324177F6F6BAEE9D2089C407F24AB901CF5C8E?network=testnet) |
+| 1 | happy_path | PASS (9/9 gates) | [`CEF8E2EB…223E35`](https://testnet.xrpl.org/transactions/CEF8E2EB94279825225D65E6E574B481B58E7B54C2B81C764807F2CDA0223E35) |
+| 2 | wrong_amount | FAIL_AS_EXPECTED (gate 6) | [`B04418DC…ACBA1`](https://testnet.xrpl.org/transactions/B04418DC37BE22B13360618AC5D5EFCAD8A09D1ACB5F0D431D2A15C67E4ACBA1) |
+| 3 | missing_memo | FAIL_AS_EXPECTED (gate 8) | [`7FEDC773…750F2A`](https://testnet.xrpl.org/transactions/7FEDC7730C7926BAC651B2624D87D915963D029CF3DCB927A4CCA6D1FA750F2A) |
+| 4 | wrong_destination_tag | FAIL_AS_EXPECTED (gate 5) | [`4D2BADDD…CF5C8E`](https://testnet.xrpl.org/transactions/4D2BADDDE448A4156B2EA1D2F4324177F6F6BAEE9D2089C407F24AB901CF5C8E) |
 | 5 | partial_payment_flag | NETWORK_REJECTED_AS_EXPECTED | `temBAD_SEND_XRP_MAX` (defense-in-depth at network layer) |
 
 Full transcript: [`docs/proofs/testnet-suite-output.txt`](./docs/proofs/testnet-suite-output.txt).

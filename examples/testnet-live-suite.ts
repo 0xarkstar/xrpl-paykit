@@ -33,7 +33,7 @@ import { Client, Wallet, convertStringToHex } from "xrpl";
 // ─────────────────────────────────────────────────────────────────────
 
 const XRPL_TESTNET = "wss://s.altnet.rippletest.net:51233";
-const EXPLORER = "https://livenet.xrpl.org/transactions";
+const EXPLORER = "https://testnet.xrpl.org/transactions";
 const MEMO_TYPE = "xpk:intent";
 const TF_PARTIAL_PAYMENT = 0x00020000;
 
@@ -274,7 +274,7 @@ function printScenario(s: ScenarioResult) {
   if (s.txHash) {
     console.log(`  Tx hash  : ${s.txHash}`);
     if (s.ledger !== undefined) console.log(`  Ledger   : ${s.ledger}`);
-    console.log(`  Explorer : ${EXPLORER}/${s.txHash}?network=testnet`);
+    console.log(`  Explorer : ${EXPLORER}/${s.txHash}`);
     console.log("  Gates    :");
     for (const g of s.gates) {
       const mark = g.pass ? "\x1b[32m✓\x1b[0m" : "\x1b[31m✗\x1b[0m";

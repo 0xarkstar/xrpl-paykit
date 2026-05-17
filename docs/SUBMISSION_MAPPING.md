@@ -22,7 +22,7 @@
 | **§3-4 차별성 (1)~(7)** | "머천트 측 SDK · 9-단계 · t54.ai 보완재 · Stripe DX · Bluenode · XRPL EVM 경험 · XLS-85+Cross-Currency+XLS-47+XLS-33" | [`docs/PRD.md` §3 + §4 + §13](./PRD.md), [`packages/sdk/`](../packages/sdk), [`apps/paykit/src/xrpl/verify-tx.ts`](../apps/paykit/src/xrpl/verify-tx.ts) |
 | **§3-5 XRPL 선택 이유 (1)~(7)** | "finality · fee · native primitives · Ripple Korea 2026 · 결제 검증 · EVM Sidechain · 한국 핀테크 fit" | [`docs/PRD.md` §4](./PRD.md) |
 | **§4-1 GitHub 레포** | https://github.com/0xarkstar/xrpl-paykit | [`README.md`](../README.md) Hero + [`docs/SETUP.md`](./SETUP.md) |
-| **§4-2 XRPL 지갑** | sender `rNeAi6oLaxGyH3PNijKH4N3Pp8BygKVLCN` · merchant `r9pQfgH67CdxMzi8d21cJg4o1eixnfawwb` · 9/9 PASS Tx | [`examples/testnet-live.ts`](../examples/testnet-live.ts), [`docs/proofs/testnet-live-output.txt`](./proofs/testnet-live-output.txt), [explorer link →](https://livenet.xrpl.org/transactions/2FD03A47760067AEA1CC3FCE2A5DD0E4E1CAD565DFE5354D8D608DE3ECAB637A?network=testnet) |
+| **§4-2 XRPL 지갑** | sender `rNeAi6oLaxGyH3PNijKH4N3Pp8BygKVLCN` · merchant `r9pQfgH67CdxMzi8d21cJg4o1eixnfawwb` · 9/9 PASS Tx | [`examples/testnet-live.ts`](../examples/testnet-live.ts), [`docs/proofs/testnet-live-output.txt`](./proofs/testnet-live-output.txt), [explorer link →](https://testnet.xrpl.org/transactions/2FD03A47760067AEA1CC3FCE2A5DD0E4E1CAD565DFE5354D8D608DE3ECAB637A) |
 | **§4-3 프로토타입** | "monorepo 3-layer + xrpl.js 실 연동 + 9/9 PASS 2건 재현 + 본선 데모 시나리오" | [`docs/PRD.md` §7](./PRD.md) (Demo Scenarios), [`docs/screenshots/`](./screenshots/), [`examples/testnet-live.ts`](../examples/testnet-live.ts) |
 | **§5-1 진행단계** | "☑ MVP개발" | [`docs/PRD.md` §6](./PRD.md) (MVP Scope Lock), [`README.md` Status](../README.md) |
 | **서명** | 2026-05-17 / 대표자 (인) | (사용자 작성 영역) |

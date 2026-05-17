@@ -12,7 +12,7 @@ Connected: wss://s.altnet.rippletest.net:51233
 
   Tx hash  : CEF8E2EB94279825225D65E6E574B481B58E7B54C2B81C764807F2CDA0223E35
   Ledger   : 17445492
-  Explorer : https://livenet.xrpl.org/transactions/CEF8E2EB94279825225D65E6E574B481B58E7B54C2B81C764807F2CDA0223E35?network=testnet
+  Explorer : https://testnet.xrpl.org/transactions/CEF8E2EB94279825225D65E6E574B481B58E7B54C2B81C764807F2CDA0223E35
   Gates    :
     [✓] validated
     [✓] tesSUCCESS
@@ -29,7 +29,7 @@ Connected: wss://s.altnet.rippletest.net:51233
 
   Tx hash  : B04418DC37BE22B13360618AC5D5EFCAD8A09D1ACB5F0D431D2A15C67E4ACBA1
   Ledger   : 17445494
-  Explorer : https://livenet.xrpl.org/transactions/B04418DC37BE22B13360618AC5D5EFCAD8A09D1ACB5F0D431D2A15C67E4ACBA1?network=testnet
+  Explorer : https://testnet.xrpl.org/transactions/B04418DC37BE22B13360618AC5D5EFCAD8A09D1ACB5F0D431D2A15C67E4ACBA1
   Gates    :
     [✓] validated
     [✓] tesSUCCESS
@@ -46,7 +46,7 @@ Connected: wss://s.altnet.rippletest.net:51233
 
   Tx hash  : 7FEDC7730C7926BAC651B2624D87D915963D029CF3DCB927A4CCA6D1FA750F2A
   Ledger   : 17445496
-  Explorer : https://livenet.xrpl.org/transactions/7FEDC7730C7926BAC651B2624D87D915963D029CF3DCB927A4CCA6D1FA750F2A?network=testnet
+  Explorer : https://testnet.xrpl.org/transactions/7FEDC7730C7926BAC651B2624D87D915963D029CF3DCB927A4CCA6D1FA750F2A
   Gates    :
     [✓] validated
     [✓] tesSUCCESS
@@ -63,7 +63,7 @@ Connected: wss://s.altnet.rippletest.net:51233
 
   Tx hash  : 4D2BADDDE448A4156B2EA1D2F4324177F6F6BAEE9D2089C407F24AB901CF5C8E
   Ledger   : 17445498
-  Explorer : https://livenet.xrpl.org/transactions/4D2BADDDE448A4156B2EA1D2F4324177F6F6BAEE9D2089C407F24AB901CF5C8E?network=testnet
+  Explorer : https://testnet.xrpl.org/transactions/4D2BADDDE448A4156B2EA1D2F4324177F6F6BAEE9D2089C407F24AB901CF5C8E
   Gates    :
     [✓] validated
     [✓] tesSUCCESS
